@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32922.545
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JWT_LibraryTest", "JWT_LibraryTest\JWT_LibraryTest.csproj", "{B68F92D0-BDA0-4790-897D-B35095FE7C3A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JWTAuthLibrary", "..\JWTAuthLibrary\JWTAuthLibrary\JWTAuthLibrary.csproj", "{91EE129D-5F63-48DC-AF5F-188BAFCE5303}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B68F92D0-BDA0-4790-897D-B35095FE7C3A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B68F92D0-BDA0-4790-897D-B35095FE7C3A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B68F92D0-BDA0-4790-897D-B35095FE7C3A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B68F92D0-BDA0-4790-897D-B35095FE7C3A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{91EE129D-5F63-48DC-AF5F-188BAFCE5303}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{91EE129D-5F63-48DC-AF5F-188BAFCE5303}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{91EE129D-5F63-48DC-AF5F-188BAFCE5303}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{91EE129D-5F63-48DC-AF5F-188BAFCE5303}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {EA20BE7F-884D-400A-BF72-49ACDA868FE1}
+	EndGlobalSection
+EndGlobal
