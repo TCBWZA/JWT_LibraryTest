@@ -1,5 +1,21 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 using JWTAuthLibrary;
-
+using System.Text.Json;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,20 +25,19 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddJWTAuth(opt =>
 {
-    opt.IssuerSigningSecret = "xxxx";
-    opt.OnValidateUserInfo = (jsonBody, p) =>
+    opt.OnValidateUserInfo = async (loginJson, p) =>
     {
-        DefaultUserLogin login = JsonSerializer.Deserialize<DefaultUserLogin>(jsonBody,
-            new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });
-
-        // TODO: verify the password is valid.
-        UserInfo user = new UserInfo(login.Username, login);
-        return Task.FromResult(user);
+        UserLoginModel userLogin = JsonSerializer.Deserialize<UserLoginModel>(loginJson, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+        UserService userService = p.GetRequiredService<UserService>();
+        User validUser = await userService.GetValidUserAsync(userLogin.UserName, userLogin.Password).ConfigureAwait(false);
+        return new UserInfo(validUser.Name, userLogin);
     };
 
-    opt.OnValidateRoleInfo = (validUser, p) =>
+    opt.OnValidateRoleInfo = async (userInfo, p) =>
     {
-        return Task.FromResult<IEnumerable<string>>(new string[] { validUser.Name });
+        UserService userService = p.GetRequiredService<UserService>();
+        User theUser = await userService.GetUserByNameAsync(userInfo.Name);
+        return (await userService.GetRoles(theUser).ConfigureAwait(false)).Select(r => r.Name);
     };
 });
 
