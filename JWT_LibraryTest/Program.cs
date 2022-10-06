@@ -29,15 +29,15 @@ builder.Services.AddJWTAuth(opt =>
     {
         UserLoginModel userLogin = JsonSerializer.Deserialize<UserLoginModel>(loginJson, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
         UserService userService = p.GetRequiredService<UserService>();
-        User validUser = await userService.GetValidUserAsync(userLogin.UserName, userLogin.Password).ConfigureAwait(false);
-        return new UserInfo(validUser.Name, userLogin);
+        Users validUser = await userService.GetValidUserAsync(userLogin.LoginName, userLogin.PasswordHash).ConfigureAwait(false);
+        return new UserInfo(validUser.LoginName, userLogin);
     };
 
     opt.OnValidateRoleInfo = async (userInfo, p) =>
     {
         UserService userService = p.GetRequiredService<UserService>();
-        User theUser = await userService.GetUserByNameAsync(userInfo.Name);
-        return (await userService.GetRoles(theUser).ConfigureAwait(false)).Select(r => r.Name);
+        Users theUser = await userService.GetUserByNameAsync(userInfo.Name);
+        return (userService.GetRoles(theUser));
     };
 });
 
